@@ -1,0 +1,20 @@
+Date,Description,Amount,Currency,PaidBy,SplitType,SplitDetails,Notes
+2024-01-15,Weekly groceries,1500,INR,Aisha,EQUAL,,First grocery run
+2024-02-15,Rent Payment,20000,INR,Rohan,EQUAL,,Rent payment
+2024-02-15,Rent Payment,20000,INR,Rohan,EQUAL,,Rent payment
+2024-02-20,Refund for damaged chairs,-1500,INR,Priya,EQUAL,,Refund for chairs
+2024-03-05,Aisha paid back Rohan,3000,INR,Aisha,EXACT,Rohan:3000,Reimbursement
+2024-02-10,Netflix subscription,$15,USD,Priya,EQUAL,,Netflix
+2024-02-11,Spotify subscription,$10,INR,Priya,EQUAL,,Spotify
+2024-02-12,Water bill,800,INR,Karan,EQUAL,,Water bill
+2024-04-10,Cleaning supplies,1200,INR,Aisha,EXACT,Aisha:400,Rohan:400,Meera:400,Post-leave split
+2024-02-05,Internet router upgrade,3000,INR,Aisha,EXACT,Aisha:1000,Rohan:1000,Sam:1000,Pre-join split
+,Missing columns,1000,INR,Aisha,EQUAL,,Missing date row
+NotADate,Coffee run,450,INR,Aisha,EQUAL,,Bad date row
+2024-02-22,Groceries,2500,INR,Aisha,PERCENTAGE,Aisha:50,Rohan:30,Priya:10,Percentage error
+2024-02-23,Dinner outing,6000,INR,Rohan,EXACT,Aisha:2000,Rohan:2000,Priya:1500,Exact mismatch row
+2024-02-24,Free trial signup,0,INR,Priya,EQUAL,,Zero amount row
+2024-02-25,Electricity bill,4500,INR,aisha,EQUAL,,Name variant row
+2024-03-10,Weekly groceries,1600,INR,Rohan,EQUAL,,Standard grocery run
+2024-04-20,Gas refill,1200,INR,Sam,EQUAL,,Standard gas run
+2024-05-12,Dinner during Goa trip,9000,INR,Rohan,EQUAL,,Goa trip dinner

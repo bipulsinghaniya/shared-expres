@@ -3,9 +3,9 @@ services:
     name: split-ledger-api
     env: node
     plan: free
-    rootDir: server
-    buildCommand: npm install
-    startCommand: node server.js
+    rootDir: .
+    buildCommand: npm install --prefix server
+    startCommand: npm run start --prefix server
     envVars:
       - key: PORT
         value: 5000
@@ -22,9 +22,9 @@ services:
     name: split-ledger-web
     env: node
     plan: free
-    rootDir: client
-    buildCommand: npm install && npm run build
-    publishPath: dist
+    rootDir: .
+    buildCommand: npm install --prefix client && npm run build --prefix client
+    publishPath: client/dist
     envVars:
       - key: NODE_ENV
         value: production

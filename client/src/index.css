@@ -1,0 +1,249 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #00d4ff #0a0f1e;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #0a0f1e;
+    border-radius: 3px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #00d4ff;
+    border-radius: 3px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #7c3aed;
+  }
+
+  body {
+    background-color: #0a0f1e;
+    @apply text-white font-sans antialiased;
+  }
+
+  input, select, textarea {
+    background-color: #0d1424;
+    border-color: rgba(0, 212, 255, 0.2);
+    @apply text-white placeholder-slate-500 rounded-xl;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: #00d4ff;
+    --tw-ring-color: rgba(0, 212, 255, 0.2);
+    @apply ring-2;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-wide font-bold;
+  }
+}
+
+@layer components {
+  /* Premium Glass Card */
+  .glass-card {
+    background-color: #111827;
+    box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.15), 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+    @apply backdrop-blur-xl rounded-2xl transition-all duration-300;
+  }
+
+  .glass-card-hover {
+    @apply glass-card;
+  }
+
+  .glass-card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.35), 0 12px 30px -4px rgba(0, 212, 255, 0.15);
+  }
+
+  /* Buttons with premium styles and micro-animations */
+  .btn-primary {
+    background: linear-gradient(135deg, #7c3aed 0%, #00d4ff 100%);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.25);
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-white font-semibold rounded-xl
+           hover:brightness-110 active:scale-[0.97]
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:brightness-100 disabled:active:scale-100;
+  }
+
+  .btn-secondary {
+    background-color: #111827;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-slate-300 font-medium rounded-xl
+           hover:bg-[#00d4ff]/10 hover:text-white active:scale-[0.97]
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #7c3aed 100%);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.25);
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-white font-semibold rounded-xl
+           hover:brightness-110 active:scale-[0.97] transition-all duration-200;
+  }
+
+  .btn-success {
+    background: linear-gradient(135deg, #10b981 0%, #00d4ff 100%);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-white font-semibold rounded-xl
+           hover:brightness-110 active:scale-[0.97] transition-all duration-200;
+  }
+
+  /* Color Coded Badges */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider;
+  }
+
+  .badge-cyan {
+    @apply badge bg-[#00d4ff]/15 text-[#00d4ff] border border-[#00d4ff]/30;
+  }
+
+  .badge-purple {
+    @apply badge bg-[#7c3aed]/15 text-purple-300 border border-[#7c3aed]/30;
+  }
+
+  .badge-amber {
+    @apply badge bg-amber-500/15 text-amber-300 border border-amber-500/30;
+  }
+
+  .badge-emerald {
+    @apply badge bg-emerald-500/15 text-emerald-300 border border-emerald-500/30;
+  }
+
+  .badge-rose {
+    @apply badge bg-rose-500/15 text-rose-300 border border-rose-500/30;
+  }
+
+  .badge-blue {
+    @apply badge bg-blue-500/15 text-blue-300 border border-blue-500/30;
+  }
+
+  .badge-gray {
+    @apply badge bg-slate-500/15 text-slate-300 border border-slate-500/30;
+  }
+
+  /* Input fields */
+  .input-field {
+    background-color: #0d1424;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    @apply w-full px-4 py-2.5 text-white placeholder-slate-500 rounded-xl
+           focus:outline-none focus:border-[#00d4ff] focus:ring-2 focus:ring-[#00d4ff]/20
+           transition-all duration-200;
+  }
+
+  .label-text {
+    @apply block text-sm font-semibold text-slate-300 mb-1.5;
+  }
+
+  /* Tabular numbers and currency monospace */
+  .monospace-amount {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-feature-settings: "tnum";
+    @apply tracking-wider;
+  }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+/* Pulse animation for Enable Import button glow */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3), 0 4px 15px rgba(0, 212, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 212, 255, 0.7), 0 4px 20px rgba(0, 212, 255, 0.4);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* Light Mode Overrides */
+html.light-mode body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+html.light-mode *::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+html.light-mode *::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
+html.light-mode input, 
+html.light-mode select, 
+html.light-mode textarea {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+html.light-mode input::placeholder, 
+html.light-mode select::placeholder, 
+html.light-mode textarea::placeholder {
+  color: #94a3b8;
+}
+
+html.light-mode .glass-card,
+html.light-mode .glass-card-hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+html.light-mode .glass-card-hover:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+html.light-mode .btn-secondary {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+html.light-mode .btn-secondary:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+html.light-mode .input-field {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+html.light-mode .label-text {
+  color: #475569;
+}
+
+html.light-mode {
+  --toast-bg: #ffffff;
+  --toast-color: #0f172a;
+  --toast-border: #cbd5e1;
+}

@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '',
+  // Prefer an explicit Vite env var set in Render or local .env; fall back
+  // to the provided Render backend URL so deployed frontend can reach API.
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://shared-expres-backend.onrender.com',
   headers: {
     'Content-Type': 'application/json',
   },

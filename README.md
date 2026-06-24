@@ -1,6 +1,6 @@
 # SplitLedger — Shared Expenses Tracker
 
-## 🚀 Try it Live
+## 🚀 Try it Live 
 
 Check out the live deployment here: [shared-expenses-app-ecru.vercel.app](https://shared-expenses-app-ecru.vercel.app)
 

@@ -4,7 +4,7 @@ const Group = require('../models/Group');
 const GroupMember = require('../models/GroupMember');
 const Expense = require('../models/Expense');
 const { calculateBalances } = require('../services/balanceCalculator');
-const { optimizeSettlements } = require('../services/settlementOptimizer');
+const { suggestSettlements } = require('../services/settlementOptimizer');
 
 const router = express.Router();
 
@@ -31,10 +31,10 @@ router.get('/:groupId/balances', auth, async (req, res, next) => {
     const netBalances = calculateBalances(expenses, groupMembers);
 
     // Step 2: Optimize the number of transactions required to settle up
-    const settlements = optimizeSettlements(netBalances);
+    const settlements = suggestSettlements(netBalances);
 
     res.json({
-      balances: netBalances,
+      balances: Object.values(netBalances),
       settlements,
     });
   } catch (error) {

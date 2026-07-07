@@ -3,3 +3,11 @@ node_modules/
 dist
 uploads/
 *.log
+node_modules/
+client/node_modules/
+server/node_modules/
+
+.env
+
+dist/
+client/dist/

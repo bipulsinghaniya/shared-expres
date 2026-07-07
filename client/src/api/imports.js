@@ -9,8 +9,8 @@ export const uploadCSV = (groupId, file) => {
   });
 };
 
-export const confirmImport = (groupId, importLogId, decisions) =>
-  api.post(`/api/groups/${groupId}/import/confirm`, { importLogId, decisions });
+export const confirmImport = (groupId, importLogId, resolutions) =>
+  api.post(`/api/groups/${groupId}/import/${importLogId}/confirm`, { resolutions });
 
 export const getImportLogs = (groupId) =>
   api.get(`/api/groups/${groupId}/import/logs`);

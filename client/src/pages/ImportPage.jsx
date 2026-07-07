@@ -50,14 +50,24 @@ export default function ImportPage() {
   const handleConfirm = async () => {
     setConfirming(true);
     try {
-      const decisionList = Object.entries(decisions).map(([anomalyId, status]) => ({
-        anomalyId,
-        status,
-      }));
-      const res = await confirmImport(groupId, importData.importLogId, decisionList);
-      setImportResult(res.data.summary);
+      const resolutions = Object.entries(decisions).map(([anomalyId, status]) => {
+        const anomaly = importData.anomalies.find((a) => String(a._id) === String(anomalyId));
+        return {
+          rowIndex: anomaly ? anomaly.rowIndex : null,
+          action: status === 'approved' ? 'APPROVE' : 'SKIP',
+        };
+      }).filter((r) => r.rowIndex !== null);
+
+      const res = await confirmImport(groupId, importData.importLogId, resolutions);
+      
+      setImportResult({
+        totalRows: importData.summary.totalRows,
+        imported: res.data.importedCount,
+        skipped: res.data.skippedCount,
+        errors: importData.summary.errorCount,
+      });
       setStep('done');
-      toast.success(`Import complete! ${res.data.summary.imported} expenses imported.`);
+      toast.success(res.data.message || `Import complete! ${res.data.importedCount} expenses imported.`);
     } catch (err) {
       const msg = err.response?.data?.message || 'Failed to confirm import';
       toast.error(msg);

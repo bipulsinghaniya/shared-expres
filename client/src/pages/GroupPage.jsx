@@ -200,10 +200,16 @@ export default function GroupPage() {
     setUploading(true);
     try {
       const res = await uploadCSV(groupId, file);
-      setImportData(res.data);
+      const { importLog, summary } = res.data;
+      setImportData({
+        importLogId: importLog.id,
+        anomalies: importLog.anomalies || [],
+        summary,
+        parsedRows: importLog.parsedRows || [],
+      });
       setDecisions({});
       setImportStep('review');
-      toast.success(`Parsed ${res.data.summary.totalRows} rows — review anomalies`);
+      toast.success(`Parsed ${summary.totalRows} rows — review anomalies`);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to parse CSV');
     } finally {

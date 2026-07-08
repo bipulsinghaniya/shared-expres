@@ -13,8 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <ThemeProvider>
           <App />
-          <Toaster
-            position="top-right"
+          <Toaster position="top-right"
             toastOptions={{
               duration: 4000,
               style: {
@@ -30,8 +29,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               error: {
                 iconTheme: { primary: '#f43f5e', secondary: 'var(--toast-bg, #1e1b4b)' },
               },
-            }}
-          />
+  }}/>
         </ThemeProvider>
       </AuthProvider>
     </BrowserRouter>

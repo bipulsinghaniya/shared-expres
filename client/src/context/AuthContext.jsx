@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -13,7 +14,7 @@ export function AuthProvider({ children }) {
     const token = localStorage.getItem('token');
     if (token) {
       getMe()
-        .then((res) => {
+          .then((res) => {
           setUser(res.data.user);
         })
         .catch(() => {

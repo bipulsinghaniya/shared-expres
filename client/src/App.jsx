@@ -50,14 +50,14 @@ function PublicRoute({ children }) {
 export default function App() {
   return (
     <Routes>
+
+
       <Route
         path="/login"
-        element={
-          <PublicRoute>
-            <LoginPage />
-          </PublicRoute>
-        }
+        element={ <PublicRoute> <LoginPage /></PublicRoute> }
       />
+
+
       <Route
         path="/register"
         element={
@@ -66,6 +66,8 @@ export default function App() {
           </PublicRoute>
         }
       />
+
+
       <Route
         path="/"
         element={
@@ -80,6 +82,9 @@ export default function App() {
         <Route path="groups/:groupId/balances" element={<BalancePage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
+
+
+      
     </Routes>
   );
 }

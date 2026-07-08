@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 
 export default function Dashboard() {
+  
   const { user } = useAuth();
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);

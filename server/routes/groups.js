@@ -14,7 +14,6 @@ router.get('/', auth, async (req, res, next) => {
   try {
     // Find all group IDs for this user
     const groupIds = await GroupMember.findGroupIdsByUser(req.user.userId);
-
     const groups = await Group.findByIds(groupIds);
 
     // Attach member count and expense count to each group

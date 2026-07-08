@@ -69,6 +69,12 @@ export default function ExpenseForm({ groupId, members, onClose, onCreated }) {
     }
     setSaving(true);
     try {
+      // Build splitWith: for EQUAL use all active members, for others use splitDetails
+      const splitWith =
+        form.splitType === 'EQUAL'
+          ? activeMembers.map((m) => ({ userId: m.userId._id || m.userId }))
+          : splitDetails.map((s) => ({ userId: s.userId }));
+
       const payload = {
         description: form.description,
         amount: parseFloat(form.amount),
@@ -76,6 +82,7 @@ export default function ExpenseForm({ groupId, members, onClose, onCreated }) {
         date: form.date,
         paidBy: form.paidBy,
         splitType: form.splitType,
+        splitWith,
         isSettlement: form.isSettlement,
         notes: form.notes,
       };

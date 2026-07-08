@@ -59,7 +59,11 @@ router.post('/:groupId/expenses', auth, async (req, res, next) => {
 
     // Validate request
     if (!description || !amount || !date || !paidBy || !splitType || !splitWith) {
-      return res.status(400).json({ message: 'Missing required fields' });
+      console.log('Missing required fields:', { description, amount, date, paidBy, splitType, splitWith });
+      return res.status(400).json({ 
+        message: 'Missing required fields',
+        received: { description, amount, date, paidBy, splitType, splitWith }
+      });
     }
 
     // Verify payer is in group

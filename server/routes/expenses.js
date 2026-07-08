@@ -57,7 +57,9 @@ function calculateSplits(amount, splitType, splitWith, splitDetails, payerId) {
 // ---------------------------------------------------------------------------
 router.get('/:groupId/expenses', auth, async (req, res, next) => {
   try {
+
     const { groupId } = req.params;
+    
     const { includeDeleted, startDate, endDate, paidBy } = req.query;
 
     const filters = {

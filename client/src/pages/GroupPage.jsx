@@ -42,6 +42,7 @@ const TABS = [
 ];
 
 export default function GroupPage() {
+  
   const { groupId } = useParams();
   const { user } = useAuth();
   
@@ -492,7 +493,7 @@ export default function GroupPage() {
             ) : (
               filteredExpenses.map((exp) => (
                 <div
-                  key={exp._id}
+                  key={exp.id}
                   className="glass-card p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(0,212,255,0.2)] transition-all duration-300 border-t border-t-slate-800"
                 >
                   <div className="flex items-start gap-4">
@@ -536,7 +537,7 @@ export default function GroupPage() {
                     </div>
 
                     <button
-                      onClick={() => handleDeleteExpense(exp._id)}
+                      onClick={() => handleDeleteExpense(exp.id)}
                       className="p-2 text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-all"
                       title="Delete"
                     >

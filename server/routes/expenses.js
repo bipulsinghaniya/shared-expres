@@ -58,10 +58,19 @@ router.post('/:groupId/expenses', auth, async (req, res, next) => {
     } = req.body;
 
     // Validate request
-    if (!description || !amount || !date || !paidBy || !splitType || !splitWith) {
-      console.log('Missing required fields:', { description, amount, date, paidBy, splitType, splitWith });
+    const missing = [];
+    if (!description) missing.push('description');
+    if (amount === undefined || amount === null || amount === '') missing.push('amount');
+    if (!date) missing.push('date');
+    if (paidBy === undefined || paidBy === null || paidBy === '') missing.push('paidBy');
+    if (!splitType) missing.push('splitType');
+    if (!splitWith || !Array.isArray(splitWith) || splitWith.length === 0) missing.push('splitWith');
+
+    if (missing.length > 0) {
+      console.log('Missing required fields:', missing, 'Body received:', req.body);
       return res.status(400).json({ 
-        message: 'Missing required fields',
+        message: `Missing required fields: ${missing.join(', ')}`,
+        missing,
         received: { description, amount, date, paidBy, splitType, splitWith }
       });
     }

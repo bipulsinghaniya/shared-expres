@@ -9,8 +9,8 @@ export default function SettlementSuggestions({ settlements, groupId, onSettled 
   const handleMarkSettled = async (settlement) => {
     setSettling(settlement);
     try {
-      await createExpense(groupId, {
-        description: `Settlement: ${settlement.from.name} → ${settlement.to.name}`,
+      const payload = {
+        description: `Settlement: ${settlement.from.name} pays ${settlement.to.name}`,
         amount: settlement.amount,
         currency: 'INR',
         amountInINR: settlement.amount,
@@ -20,12 +20,18 @@ export default function SettlementSuggestions({ settlements, groupId, onSettled 
         splitWith: [{ userId: settlement.to.userId }],
         splitDetails: [{ userId: settlement.to.userId, value: settlement.amount }],
         isSettlement: true,
-        notes: 'Auto-generated settlement from suggestion',
-      });
+        notes: 'Auto-generated settlement',
+      };
+      console.log('Mark Settled payload:', JSON.stringify(payload, null, 2));
+      await createExpense(groupId, payload);
       toast.success(`Settlement recorded: ${settlement.from.name} → ${settlement.to.name}`);
       onSettled?.();
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to record settlement');
+      console.error('Settlement error:', err.response?.data);
+      const detail = err.response?.data?.received 
+        ? `\nReceived: ${JSON.stringify(err.response.data.received)}` 
+        : '';
+      toast.error((err.response?.data?.message || 'Failed to record settlement') + detail);
     } finally {
       setSettling(null);
     }

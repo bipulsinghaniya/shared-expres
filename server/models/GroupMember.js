@@ -77,10 +77,11 @@ async function getActiveMembers(groupId, date) {
  */
 async function getAllMembers(groupId) {
   const result = await query(
-    `SELECT gm.*, u.name AS user_name, u.email AS user_email
+    `SELECT DISTINCT ON (gm.user_id) gm.*, u.name AS user_name, u.email AS user_email
      FROM group_members gm
      JOIN users u ON u.id = gm.user_id
-     WHERE gm.group_id = $1`,
+     WHERE gm.group_id = $1
+     ORDER BY gm.user_id, gm.join_date ASC`,
     [groupId]
   );
   return result.rows.map(formatMember);

@@ -13,12 +13,12 @@ export default function SettlementSuggestions({ settlements, groupId, onSettled 
         description: `Settlement: ${settlement.from.name} → ${settlement.to.name}`,
         amount: settlement.amount,
         currency: 'INR',
+        amountInINR: settlement.amount,
         date: new Date().toISOString().split('T')[0],
         paidBy: settlement.from.userId,
         splitType: 'EXACT',
-        splitDetails: [
-          { userId: settlement.to.userId, amount: settlement.amount },
-        ],
+        splitWith: [{ userId: settlement.to.userId }],
+        splitDetails: [{ userId: settlement.to.userId, value: settlement.amount }],
         isSettlement: true,
         notes: 'Auto-generated settlement from suggestion',
       });

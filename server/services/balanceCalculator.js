@@ -59,7 +59,7 @@ function calculateBalances(expenses, members) {
     // Skip deleted expenses — they must NEVER affect balances
     if (expense.isDeleted) continue;
 
-    const payerId = String(expense.paidBy._id || expense.paidBy);
+    const payerId = String(expense.paidBy.id || expense.paidBy);
     const amountINR = expense.amountInINR;
 
     // Ensure the payer exists in the balance map
@@ -74,6 +74,7 @@ function calculateBalances(expenses, members) {
       };
     }
 
+
     if (expense.isSettlement) {
       // ---------------------------------------------------------------
       // SETTLEMENT: direct transfer between two people
@@ -84,7 +85,7 @@ function calculateBalances(expenses, members) {
       // Settlements have splits = [{ userId: receiverId, amount }]
       // ---------------------------------------------------------------
       for (const split of expense.splits) {
-        const receiverId = String(split.userId._id || split.userId);
+        const receiverId = String(split.userId.id || split.userId);
         const transferAmount = split.amount;
 
         // Payer paid out money → credit (positive adjustment)
@@ -118,7 +119,7 @@ function calculateBalances(expenses, members) {
 
       // Debit each split member
       for (const split of expense.splits) {
-        const memberId = String(split.userId._id || split.userId);
+        const memberId = String(split.userId.id || split.userId);
         const memberShare = split.amount;
 
         if (!balances[memberId]) {
@@ -174,12 +175,12 @@ function getExpenseBreakdown(expenses, userId) {
     // Skip deleted expenses
     if (expense.isDeleted) continue;
 
-    const payerId = String(expense.paidBy._id || expense.paidBy);
+    const payerId = String(expense.paidBy.id || expense.paidBy);
     const isPayer = payerId === uid;
 
     // Find this member's split entry (if any)
     const splitEntry = expense.splits.find(
-      (s) => String(s.userId._id || s.userId) === uid
+      (s) => String(s.userId.id || s.userId) === uid
     );
     const isInSplit = !!splitEntry;
 
@@ -202,7 +203,7 @@ function getExpenseBreakdown(expenses, userId) {
     }
 
     breakdown.push({
-      expenseId: expense._id,
+      expenseId: expense.id || expense._id,
       date: expense.date,
       description: expense.description,
       totalAmount: expense.amount,

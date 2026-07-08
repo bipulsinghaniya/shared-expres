@@ -4,9 +4,11 @@ const fs = require('fs');
 const path = require('path');
 const auth = require('../middleware/auth');
 const Group = require('../models/Group');
+const GroupMember = require('../models/GroupMember');
 const ImportLog = require('../models/ImportLog');
 const Expense = require('../models/Expense');
 const { parseAndAnalyzeCSV } = require('../services/csvImporter');
+const { calculateSplits } = require('../utils/splitCalculator');
 
 const router = express.Router();
 
@@ -149,6 +151,28 @@ router.post('/:groupId/import/:importId/confirm', auth, async (req, res, next) =
     // 3. Create actual Expenses in DB
     const importedExpenses = [];
     for (const rowData of validRows) {
+      let splitWith = rowData.splitWith || [];
+      if (splitWith.length === 0 && rowData.splitType === 'EQUAL') {
+        const activeMembers = await GroupMember.getActiveMembers(groupId, rowData.date);
+        splitWith = activeMembers.map(m => ({ userId: m.userId.id || m.userId._id || m.userId }));
+      }
+
+      let finalSplits = [];
+      if (!rowData.isSettlement) {
+        finalSplits = calculateSplits(
+          rowData.amountInINR || rowData.amount,
+          rowData.splitType,
+          splitWith,
+          rowData.splitDetails,
+          rowData.paidBy
+        );
+      } else {
+        finalSplits = rowData.splitDetails.map(s => ({
+          userId: s.userId,
+          amount: s.value
+        }));
+      }
+
       const expenseData = {
         groupId,
         description: rowData.description,
@@ -159,10 +183,7 @@ router.post('/:groupId/import/:importId/confirm', auth, async (req, res, next) =
         date: rowData.date,
         paidBy: rowData.paidBy,
         splitType: rowData.splitType,
-        splits: rowData.splitDetails.map(s => ({
-          userId: s.userId,
-          amount: s.value
-        })),
+        splits: finalSplits,
         isSettlement: rowData.isSettlement,
         importRowIndex: rowData.rowIndex,
         notes: rowData.notes,

@@ -64,14 +64,17 @@ router.post('/:groupId/expenses', auth, async (req, res, next) => {
     if (!date) missing.push('date');
     if (paidBy === undefined || paidBy === null || paidBy === '') missing.push('paidBy');
     if (!splitType) missing.push('splitType');
-    if (!splitWith || !Array.isArray(splitWith) || splitWith.length === 0) missing.push('splitWith');
+    // splitWith is optional for settlements — we derive it from splitDetails
+    if (!isSettlement && (!splitWith || !Array.isArray(splitWith) || splitWith.length === 0)) {
+      missing.push('splitWith');
+    }
 
     if (missing.length > 0) {
       console.log('Missing required fields:', missing, 'Body received:', req.body);
       return res.status(400).json({ 
         message: `Missing required fields: ${missing.join(', ')}`,
         missing,
-        received: { description, amount, date, paidBy, splitType, splitWith }
+        received: { description, amount, date, paidBy, splitType, splitWith, isSettlement }
       });
     }
 
@@ -81,12 +84,14 @@ router.post('/:groupId/expenses', auth, async (req, res, next) => {
       return res.status(400).json({ message: 'Payer is not a member of this group' });
     }
 
-    // Verify all splitWith members are in group
-    const memberIds = splitWith.map((user) => user.userId);
-    for (const userId of memberIds) {
-      const isMember = await GroupMember.findByGroupAndUser(groupId, userId);
-      if (!isMember) {
-        return res.status(400).json({ message: `User ${userId} is not a member of this group` });
+    // Verify all splitWith members are in group (only for non-settlement expenses)
+    if (!isSettlement && splitWith && Array.isArray(splitWith)) {
+      const memberIds = splitWith.map((user) => user.userId);
+      for (const userId of memberIds) {
+        const isMember = await GroupMember.findByGroupAndUser(groupId, userId);
+        if (!isMember) {
+          return res.status(400).json({ message: `User ${userId} is not a member of this group` });
+        }
       }
     }
 
@@ -96,13 +101,17 @@ router.post('/:groupId/expenses', auth, async (req, res, next) => {
       finalSplits = calculateSplits(amount, splitType, splitWith, splitDetails, paidBy);
     } else {
       // For settlements, one person pays another exactly.
-      // splitWith should contain the receiver.
-      finalSplits = [
-        {
-          userId: splitWith[0].userId,
-          amount: amount,
-        },
-      ];
+      // Try splitWith first, fall back to splitDetails for the receiver.
+      let receiverUserId;
+      if (splitWith && Array.isArray(splitWith) && splitWith.length > 0) {
+        receiverUserId = splitWith[0].userId;
+      } else if (splitDetails && Array.isArray(splitDetails) && splitDetails.length > 0) {
+        receiverUserId = splitDetails[0].userId;
+      }
+      if (!receiverUserId) {
+        return res.status(400).json({ message: 'Settlement requires a receiver (splitWith or splitDetails)' });
+      }
+      finalSplits = [{ userId: receiverUserId, amount: amountInINR || amount }];
     }
 
     const expense = await Expense.create({

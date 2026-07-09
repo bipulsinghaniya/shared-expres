@@ -879,7 +879,7 @@ export default function GroupPage() {
                         minimumFractionDigits: 2,
                       })}
                     </span>
-                  </div>
+                  </div>   
 
                   <ChevronRight className="w-5 h-5 text-slate-600 group-hover:text-[#00d4ff] transition-colors flex-shrink-0 ml-2" />
                 </button>

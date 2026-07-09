@@ -34,6 +34,11 @@ import SettlementSuggestions from '../components/balances/SettlementSuggestions'
 import AnomalyReviewTable from '../components/import/AnomalyReviewTable';
 import ImportReport from '../components/import/ImportReport';
 
+
+
+
+
+
 const TABS = [
   { id: 'members', label: 'Members', icon: Users },
   { id: 'expenses', label: 'Expenses', icon: Receipt },
@@ -800,6 +805,281 @@ export default function GroupPage() {
           }}
         />
       )}
+
+
+
+
+
+
+
+ <div className="glass-card overflow-hidden border border-[#00d4ff]/15">
+      <div className="px-6 py-5 border-b border-[#00d4ff]/15 bg-[#0d1424]/40 flex items-center justify-between">
+        <div>
+            <h3 className="text-base font-bold text-white tracking-wide">Net Balances</h3><p className="text-xs text-slate-400 mt-1">Click a member to inspect their expense breakdown</p>
+        </div>
+     </div>
+
+
+
+    <div className="divide-y divide-slate-800/60">
+      {balances.length === 0 ? (
+            <div className="p-12 text-center text-slate-500 text-sm">
+              No balance data available
+            </div>
+          ) : (
+            balances.map((b) => {
+              const isPositive = b.balance > 0.01;
+              const isNegative = b.balance < -0.01;
+              const isZero = !isPositive && !isNegative;
+              const avatarColor = getAvatarColor(b.name);
+
+              return (
+                <button
+                  key={b.userId}
+                  onClick={() => onSelectMember(b.userId)}
+                  className="w-full flex items-center gap-4 px-6 py-4.5 hover:bg-[#00d4ff]/5 transition-all duration-200 text-left group border-l-4 border-l-transparent hover:border-l-[#00d4ff]"
+                >
+                  {/* Avatar circle */}
+                  <div className={`w-11 h-11 rounded-full flex items-center justify-center font-bold text-base border flex-shrink-0 ${avatarColor}`}>
+                    {b.name?.charAt(0)?.toUpperCase() || '?'}
+                  </div>
+
+                  {/* Name + email */}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-bold text-white group-hover:text-[#00d4ff] transition-colors">
+                      {b.name}
+                    </p>
+                    <p className="text-xs text-slate-400 truncate mt-0.5">{b.email}</p>
+                  </div>
+
+                  {/* Paid / Owed Breakdown */}
+                  <div className="hidden sm:block text-right mr-6">
+                    <p className="text-xs text-slate-400 leading-normal">
+                      Paid: <span className="text-slate-200 font-medium font-mono">₹{b.totalPaid?.toFixed(2)}</span>
+                    </p>
+                    <p className="text-xs text-slate-400 leading-normal">
+                      Share: <span className="text-slate-200 font-medium font-mono">₹{b.totalOwed?.toFixed(2)}</span>
+                    </p>
+                  </div>
+
+                  {/* Net balance */}
+                  <div className="flex items-center gap-2.5 flex-shrink-0">
+                    {isPositive && <TrendingUp className="w-4 h-4 text-emerald-400" />}
+                    {isNegative && <TrendingDown className="w-4 h-4 text-rose-400" />}
+                    {isZero && <Minus className="w-4 h-4 text-slate-500" />}
+                    <span
+                      className={`text-base font-extrabold monospace-amount
+                        ${isPositive ? 'text-emerald-400' : ''}
+                        ${isNegative ? 'text-rose-400' : ''}
+                        ${isZero ? 'text-slate-500' : ''}
+                      `}
+                    >
+                      {isPositive ? '+' : ''}₹
+                      {Math.abs(b.balance).toLocaleString('en-IN', {
+                        minimumFractionDigits: 2,
+                      })}
+                    </span>
+                  </div>
+
+                  <ChevronRight className="w-5 h-5 text-slate-600 group-hover:text-[#00d4ff] transition-colors flex-shrink-0 ml-2" />
+                </button>
+              );
+            })
+          )}
+        </div>
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////// adding new data from balances page
+
+
+
+
+
+//  <div className="glass-card overflow-hidden border border-[#00d4ff]/15">
+//         <div className="px-6 py-5 border-b border-[#00d4ff]/15 bg-[#0d1424]/40 flex items-center justify-between">
+//           <div>
+//             <h3 className="text-base font-bold text-white tracking-wide">Net Balances</h3>
+//             <p className="text-xs text-slate-400 mt-1">Click a member to inspect their expense breakdown</p>
+//           </div>
+//         </div>
+
+//         <div className="divide-y divide-slate-800/60">
+//           {balances.length === 0 ? (
+//             <div className="p-12 text-center text-slate-500 text-sm">
+//               No balance data available
+//             </div>
+//           ) : (
+//             balances.map((b) => {
+//               const isPositive = b.balance > 0.01;
+//               const isNegative = b.balance < -0.01;
+//               const isZero = !isPositive && !isNegative;
+//               const avatarColor = getAvatarColor(b.name);
+
+//               return (
+//                 <button
+//                   key={b.userId}
+//                   onClick={() => onSelectMember(b.userId)}
+//                   className="w-full flex items-center gap-4 px-6 py-4.5 hover:bg-[#00d4ff]/5 transition-all duration-200 text-left group border-l-4 border-l-transparent hover:border-l-[#00d4ff]"
+//                 >
+//                   {/* Avatar circle */}
+//                   <div className={`w-11 h-11 rounded-full flex items-center justify-center font-bold text-base border flex-shrink-0 ${avatarColor}`}>
+//                     {b.name?.charAt(0)?.toUpperCase() || '?'}
+//                   </div>
+
+//                   {/* Name + email */}
+//                   <div className="flex-1 min-w-0">
+//                     <p className="text-sm font-bold text-white group-hover:text-[#00d4ff] transition-colors">
+//                       {b.name}
+//                     </p>
+//                     <p className="text-xs text-slate-400 truncate mt-0.5">{b.email}</p>
+//                   </div>
+
+//                   {/* Paid / Owed Breakdown */}
+//                   <div className="hidden sm:block text-right mr-6">
+//                     <p className="text-xs text-slate-400 leading-normal">
+//                       Paid: <span className="text-slate-200 font-medium font-mono">₹{b.totalPaid?.toFixed(2)}</span>
+//                     </p>
+//                     <p className="text-xs text-slate-400 leading-normal">
+//                       Share: <span className="text-slate-200 font-medium font-mono">₹{b.totalOwed?.toFixed(2)}</span>
+//                     </p>
+//                   </div>
+
+//                   {/* Net balance */}
+//                   <div className="flex items-center gap-2.5 flex-shrink-0">
+//                     {isPositive && <TrendingUp className="w-4 h-4 text-emerald-400" />}
+//                     {isNegative && <TrendingDown className="w-4 h-4 text-rose-400" />}
+//                     {isZero && <Minus className="w-4 h-4 text-slate-500" />}
+//                     <span
+//                       className={`text-base font-extrabold monospace-amount
+//                         ${isPositive ? 'text-emerald-400' : ''}
+//                         ${isNegative ? 'text-rose-400' : ''}
+//                         ${isZero ? 'text-slate-500' : ''}
+//                       `}
+//                     >
+//                       {isPositive ? '+' : ''}₹
+//                       {Math.abs(b.balance).toLocaleString('en-IN', {
+//                         minimumFractionDigits: 2,
+//                       })}
+//                     </span>
+//                   </div>
+
+//                   <ChevronRight className="w-5 h-5 text-slate-600 group-hover:text-[#00d4ff] transition-colors flex-shrink-0 ml-2" />
+//                 </button>
+//               );
+//             })
+//           )}
+//         </div>
+//       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   );
 }

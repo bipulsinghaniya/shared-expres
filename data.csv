@@ -1,0 +1,9 @@
+date,description,amount,currency,paid_by,split_type,participants
+2026-07-07,Hotel Booking,6000,INR,Bipul,equal,"Aisha Sharma,Bipul,Adarsh"
+2026-07-08,Dinner at Beach Cafe,3000,INR,Adarsh,equal,"Aisha Sharma,Bipul,Adarsh"
+2026-07-09,Taxi Ride,1500,INR,Aisha Sharma,equal,"Aisha Sharma,Bipul,Adarsh"
+2026-07-10,Water Sports,4500,INR,Bipul,equal,"Aisha Sharma,Bipul,Adarsh"
+2026-07-11,Shopping,90,USD,Adarsh,equal,"Aisha Sharma,Bipul,Adarsh"
+2026-07-12,Bike Rental,2400,INR,Aisha Sharma,equal,"Aisha Sharma,Bipul,Adarsh"
+2026-07-13,Refund Hotel Advance,-1000,INR,Bipul,refund,"Aisha Sharma,Bipul,Adarsh"
+2026-07-14,Airport Food,1800,INR,Adarsh,equal,"Aisha Sharma,Bipul,Adarsh"

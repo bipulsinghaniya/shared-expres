@@ -1,0 +1,10 @@
+date,title,amount,currency,paid_by,participants,split_type,category,notes
+2026-07-08,Hotel Booking,12000,INR,Aisha Sharma,"Aisha Sharma|Bipul|Adarsh|Chandan",equal,Stay,Trip hotel advance
+2026-07-09,Train Tickets,4800,INR,Bipul,"Aisha Sharma|Bipul|Adarsh|Chandan",equal,Travel,Journey tickets
+2026-07-10,Food And Snacks,3200,INR,Adarsh,"Aisha Sharma|Bipul|Adarsh|Chandan",equal,Food,Restaurant and snacks
+2026-07-11,Cab Booking,2400,INR,Chandan,"Aisha Sharma|Bipul|Adarsh|Chandan",equal,Transport,Local travel expense
+2026-07-12,Adventure Activities,6000,INR,Aisha Sharma,"Aisha Sharma|Bipul|Adarsh|Chandan",equal,Entertainment,Trip activities
+2026-07-13,Shopping,5000,INR,Bipul,"Bipul|Adarsh|Chandan",equal,Shopping,Personal shopping expense
+2026-07-14,Resort Dinner,80,USD,Adarsh,"Aisha Sharma|Bipul|Adarsh|Chandan",equal,Food,Dollar expense during trip
+2026-07-15,Refund From Hotel,-1000,INR,Chandan,"Aisha Sharma|Bipul|Adarsh|Chandan",equal,Refund,Booking refund
+2026-07-16,Final Settlement,2500,INR,Bipul,"Bipul|Aisha Sharma",settlement,Payment,Amount settled

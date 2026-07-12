@@ -81,20 +81,6 @@ export default function BalanceSummary({ balances, onSelectMember, stats }) {
           </h3>
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       {/* Net Balances List */}
       <div className="glass-card overflow-hidden border border-[#00d4ff]/15">
         <div className="px-6 py-5 border-b border-[#00d4ff]/15 bg-[#0d1424]/40 flex items-center justify-between">
@@ -171,25 +157,6 @@ export default function BalanceSummary({ balances, onSelectMember, stats }) {
           )}
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
   );
 }
